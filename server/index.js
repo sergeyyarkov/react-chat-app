@@ -9,8 +9,8 @@ server.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-  socket.on('chat:message', message => {
-    io.emit('chat:message', message)
+  socket.on('chat:message', (message, username) => {
+    io.emit('chat:message', message, username)
   })
 })
 

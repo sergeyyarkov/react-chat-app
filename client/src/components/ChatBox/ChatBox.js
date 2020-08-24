@@ -3,7 +3,7 @@ import { socket } from '../../App'
 import Header from './Header/Header'
 import './ChatBox.scss'
 
-const ChatBox = () => {
+const ChatBox = ({ user }) => {
 
   const [messages, setMessages] = React.useState([])
   const chatContentElement = React.useRef(null)
@@ -13,11 +13,28 @@ const ChatBox = () => {
     e.preventDefault()
     const message = e.target.elements.message
 
-    socket.emit('chat:message', message.value)
+    socket.emit('chat:message', message.value, user.username)
     message.value = ''
   }
 
-  const ChatContent = () => <div ref={chatContentElement} className="chat-content">{messages.map((message, i) => <div key={i} className='message'>{message}</div>)}</div>
+  const ChatContent = () => <div ref={chatContentElement} className="chat-content">
+    {messages.map((obj, i) => {
+      const date = new Date()
+      return (
+        <div key={i} className='message'>
+          <div className="message-username">
+            <p>
+              {obj.username}
+              <span>{`${date.getHours()}:${date.getMinutes()}`}</span>
+            </p>
+          </div>
+          <div className="message-text">
+            {obj.message}
+          </div>
+        </div>
+      )
+    })}
+  </div>
 
   const ChatInput = () => {
     return (
@@ -35,8 +52,8 @@ const ChatBox = () => {
   }
 
   React.useEffect(() => {
-    socket.on('chat:message', message => {
-      setMessages(messages => ([...messages,  message]))
+    socket.on('chat:message', (message, username) => {
+      setMessages(messages => ([...messages, { message, username }]))
       chatContentElement.current.scrollTop = chatContentElement.current.scrollHeight
       inputMessageElement.current.focus()
     })

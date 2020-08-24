@@ -1,0 +1,40 @@
+.enter {
+  margin-top: 4rem; 
+  text-align: center;
+  & .enter-heading {
+    & h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    & p {
+      font-size: 16px;
+    }
+    margin-bottom: 20px;
+  }
+  & .enter-error {
+    color: #f83434;
+    margin-bottom: 10px;
+  }
+  & .enter-form {
+    & form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & input {
+        height: 40px;
+        width: 460px;
+        border-radius: 5px;
+        padding: 0 7px;
+        border: 1px solid #B8B8B8; 
+        display: block;
+      }
+      & button {
+        margin-top: 15px;
+      }
+    }
+  }
+  & .enter-footer {
+    margin-top: 25px;
+  }
+}
