@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  & .header-title {
+    display: flex;
+    align-items: center;
+    &__heading {
+      margin-left: 15px;
+      & p {
+        font-size: 18px;
+        font-weight: 600;
+        & span {
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  & .header-tools {
+    display: flex;
+    align-items: center;
+    & span {
+      margin-right: 15px;
+      font-weight: 600;
+    }
+    & svg {
+      margin-right: 10px;
+    }
+    & svg:last-child {
+      margin-right: 0;
+    }
+  }
+  border-bottom: 1px solid #F3F3F3;
+}
+
+@media (max-width: 584px) {
+  .header {
+    flex-direction: column;
+    & .header-tools {
+      margin-top: 15px;
+    }
+  }
+}

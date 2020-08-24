@@ -1,0 +1,20 @@
+{
+  "name": "react-chat-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergeyyarkov/react-chat-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergeyyarkov/react-chat-app/issues"
+  },
+  "homepage": "https://github.com/sergeyyarkov/react-chat-app#readme"
+}

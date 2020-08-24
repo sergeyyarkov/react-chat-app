@@ -1,0 +1,58 @@
+.chat {
+  border-radius: 7px;
+  box-shadow: 0px 0px 12px rgba(114, 114, 114, 0.21);
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  position: relative;
+  & .chat-content {
+    height: 370px;
+    overflow-y: scroll;
+    & .message {
+      word-wrap: break-word;
+    }
+  }
+  & .chat-content, & .chat-input {
+    padding: 15px 30px;
+  }
+  & .chat-input {
+    padding-bottom: 25px;
+    & form {
+      display: flex;
+      & input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #C9C9C9;
+        padding: 10px;
+        padding-left: 7px;
+        font-size: 14px;
+        outline: none;
+      }
+      & button {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-bottom: 1px solid #C9C9C9;
+        & svg {
+          margin-bottom: 5px;
+        }
+        &:hover {
+          & svg {
+            & path {
+              opacity: .8;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 584px) {
+  .chat {
+    margin-top: 2rem;
+    & .chat-content {
+      height: 300px;
+    }
+  }
+}
