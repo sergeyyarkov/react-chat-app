@@ -15,12 +15,17 @@ const EnterChat = ({ setUser }) => {
       return
     }
 
+    if (username.match(/\d/)) {
+      setAuthError({ status: true, message: '*Numbers are not allowed!' })
+      return
+    }
+
     if (username.length >= maxUserameLength) {
       setAuthError({ status: true, message: `*Max username length: ${maxUserameLength}` })
       return
     }
 
-    setUser({ username: username, isLoggedIn: true })
+    setUser({ username: username[0].toUpperCase() + username.slice(1), isLoggedIn: true })
     setAuthError({ status: false, message: '' })
   }
 

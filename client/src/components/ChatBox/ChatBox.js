@@ -12,24 +12,25 @@ const ChatBox = ({ user }) => {
   const sendMessage = e => {
     e.preventDefault()
     const message = e.target.elements.message
+    const date = new Date()
 
-    socket.emit('chat:message', message.value, user.username)
+    socket.emit('chat:message', message.value, user.username, `${date.getHours()}:${(`0${date.getMinutes()}`).slice(-2)}`)
     message.value = ''
   }
 
   const ChatContent = () => <div ref={chatContentElement} className="chat-content">
-    {messages.map((obj, i) => {
-      const date = new Date()
+    {messages.map((client, i) => {
+
       return (
         <div key={i} className='message'>
           <div className="message-username">
             <p>
-              {obj.username}
-              <span>{`${date.getHours()}:${date.getMinutes()}`}</span>
+              {client.username}
+              <span>{client.date}</span>
             </p>
           </div>
           <div className="message-text">
-            {obj.message}
+            {client.message}
           </div>
         </div>
       )
@@ -52,8 +53,8 @@ const ChatBox = ({ user }) => {
   }
 
   React.useEffect(() => {
-    socket.on('chat:message', (message, username) => {
-      setMessages(messages => ([...messages, { message, username }]))
+    socket.on('chat:message', (message, username, date) => {
+      setMessages(messages => ([...messages, { message, username, date }]))
       chatContentElement.current.scrollTop = chatContentElement.current.scrollHeight
       inputMessageElement.current.focus()
     })
