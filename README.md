@@ -1,7 +1,10 @@
 # React Chat App
 #### This is a simple react chat application
 
-##### Tools:
+##### 📷 Screenshot:
+![React chat](https://i.imgur.com/P9PTZXl.png)
+
+##### 🛠 Tools:
 - Socket.io
 - Express.js
 - React.js
