@@ -1,4 +1,5 @@
 import React from 'react';
+import { socket } from '../../App'
 import './EnterChat.scss'
 
 const EnterChat = ({ setUser }) => {
@@ -7,8 +8,8 @@ const EnterChat = ({ setUser }) => {
 
   const loginHandler = e => {
     e.preventDefault()
-    const username = e.target.elements.username.value.trim()
-    const maxUserameLength = 20
+    const username = e.target.elements.username.value.trim()[0].toUpperCase() + e.target.elements.username.value.trim().slice(1)
+    const maxUsernameLength = 20
 
     if (username === '') {
       setAuthError({ status: true, message: '*Invalid username!' })
@@ -20,13 +21,14 @@ const EnterChat = ({ setUser }) => {
       return
     }
 
-    if (username.length >= maxUserameLength) {
-      setAuthError({ status: true, message: `*Max username length: ${maxUserameLength}` })
+    if (username.length >= maxUsernameLength) {
+      setAuthError({ status: true, message: `*Max username length: ${maxUsernameLength}` })
       return
     }
 
-    setUser({ username: username[0].toUpperCase() + username.slice(1), isLoggedIn: true })
+    setUser({ username, isLoggedIn: true })
     setAuthError({ status: false, message: '' })
+    socket.emit('user:connected', username)
   }
 
   return (

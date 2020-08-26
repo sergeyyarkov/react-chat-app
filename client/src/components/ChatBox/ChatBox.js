@@ -4,7 +4,7 @@ import Header from './Header/Header'
 import './ChatBox.scss'
 
 const ChatBox = ({ user }) => {
-
+  const [online, setOnline] = React.useState(0)
   const [messages, setMessages] = React.useState([])
   const chatContentElement = React.useRef(null)
   const inputMessageElement = React.useRef(null)
@@ -18,30 +18,45 @@ const ChatBox = ({ user }) => {
     message.value = ''
   }
 
-  const ChatContent = () => <div ref={chatContentElement} className="chat-content">
-    {messages.map((client, i) => {
-
-      return (
-        <div key={i} className='message'>
-          <div className="message-username">
-            <p>
-              {client.username}
-              <span>{client.date}</span>
-            </p>
-          </div>
-          <div className="message-text">
-            {client.message}
-          </div>
+  const ChatContent = () => {
+    return (
+        <div ref={chatContentElement} className="chat-content">
+          {messages.map((client, i) => {
+            return (
+                <div key={i}>
+                  {client.date !== null ? <div className='message'>
+                    <div className="message-username">
+                      <p>
+                        {client.username}
+                        <span>{client.date}</span>
+                      </p>
+                    </div>
+                    <div className="message-text">
+                      {client.message}
+                    </div>
+                  </div> : <div className='info'>
+                    <span>{client.message}</span>
+                  </div>}
+              </div>
+            )
+          })}
         </div>
-      )
-    })}
-  </div>
+    )
+  }
+
+  const ChatOnline = () => {
+    return (
+        <div className='chat-online'>
+          <span>Online: {online}</span>
+        </div>
+    )
+  }
 
   const ChatInput = () => {
     return (
       <div className="chat-input">
         <form onSubmit={sendMessage}>
-          <input ref={inputMessageElement} required type="text" name='message' placeholder='message'/>
+          <input ref={inputMessageElement} required type="text" name='message' placeholder='Type your message...'/>
           <button>
             <svg width="25" height="23" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M23.5111 9.27032L3.34053 0.900689C2.49077 0.548052 1.53076 0.703179 0.835207 1.30533C0.139651 1.90757 -0.151267 2.8355 0.0760766 3.72696L1.87144 10.7676H10.6618C11.0663 10.7676 11.3942 11.0955 11.3942 11.5001C11.3942 11.9045 11.0663 12.2325 10.6618 12.2325H1.87144L0.0760766 19.2731C-0.151267 20.1646 0.139602 21.0925 0.835207 21.6947C1.53218 22.2981 2.49229 22.4513 3.34058 22.0994L23.5112 13.7298C24.4295 13.3487 25 12.4943 25 11.5001C25 10.5058 24.4295 9.65132 23.5111 9.27032Z" fill="#0070F3"/>
@@ -58,11 +73,17 @@ const ChatBox = ({ user }) => {
       chatContentElement.current.scrollTop = chatContentElement.current.scrollHeight
       inputMessageElement.current.focus()
     })
-  }, [setMessages]);
+
+    socket.on('user:connected', (username, online) => {
+      setOnline(online)
+      setMessages(messages => ([...messages, { message: `${username} Joined!`, username, date: null }]))
+    })
+  }, [setMessages, setOnline]);
 
   return (
     <div className="chat">
       <Header />
+      <ChatOnline />
       <ChatContent />
       <ChatInput />
     </div>
