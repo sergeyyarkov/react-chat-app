@@ -8,7 +8,7 @@ const EnterChat = ({ setUser }) => {
 
   const loginHandler = e => {
     e.preventDefault()
-    const username = e.target.elements.username.value.trim()[0].toUpperCase() + e.target.elements.username.value.trim().slice(1)
+    const username = e.target.elements.username.value.trim()[0].toUpperCase() + e.target.elements.username.value.trim().slice(1).toLowerCase()
     const maxUsernameLength = 20
 
     if (username === '') {
@@ -28,7 +28,7 @@ const EnterChat = ({ setUser }) => {
 
     setUser({ username, isLoggedIn: true })
     setAuthError({ status: false, message: '' })
-    socket.emit('user:connected', username)
+    socket.emit('user:connected', { username })
   }
 
   return (

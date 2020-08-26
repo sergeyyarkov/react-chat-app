@@ -9,26 +9,24 @@ server.get('/', (req, res) => {
   res.send('React Chat API')
 })
 
+const users = []
 
 io.on('connection', (socket) => {
-  const users = []
-  let onlineCounter = 0
 
-  socket.on('user:connected', (username) => {
-    onlineCounter += 1
-    io.emit('user:connected', username, onlineCounter)
-    users.push(socket.id)
-    console.log(users)
+  socket.on('user:connected', ({ username }) => {
+    users.push({ username, socketId: socket.id })
+    io.emit('user:connected', { username, online: users.length })
   })
 
-  socket.on('chat:message', (message, username, date) => {
-    io.emit('chat:message', message, username, date)
+  socket.on('chat:message', ({ message, username, date }) => {
+    io.emit('chat:message', { message, username, date })
   })
 
   socket.on('disconnecting', () => {
-    const userIndex = users.findIndex((id) => socket.id === id)
+    const userIndex = users.findIndex((user) => socket.id === user.socketId)
 
     if (userIndex !== -1) {
+      io.emit('user:disConnected', { username: users[userIndex].username, online: users.length - 1 })
       users.splice(userIndex, 1)
     }
   })
