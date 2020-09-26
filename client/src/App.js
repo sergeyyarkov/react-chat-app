@@ -4,7 +4,7 @@ import { Grid, Row, Col } from "react-flexbox-grid"
 import EnterChat from './components/EnterChat/EnterChat'
 import ChatBox from './components/ChatBox/ChatBox'
 
-const socket = io('http://localhost:3001')
+const socket = io()
 
 const App = () => {
   const [user, setUser] = React.useState({ username: '', isLoggedIn: false })

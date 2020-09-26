@@ -1,24 +1,17 @@
 {
-  "name": "react-chat-app",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run start\"",
-    "dev": "concurrently \"cd ./server && npm run dev\" \"cd ./client && npm run start\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sergeyyarkov/react-chat-app.git"
-  },
-  "dependencies": {
-    "concurrently": "^5.3.0"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sergeyyarkov/react-chat-app/issues"
-  },
-  "homepage": "https://github.com/sergeyyarkov/react-chat-app#readme"
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
 }
